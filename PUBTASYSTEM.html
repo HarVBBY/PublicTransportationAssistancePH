@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>PUBTA – Plan your commute in Caloocan, Malabon, Navotas &amp; Valenzuela</title>
+    <meta name="description" content="Find where to ride, which jeepney, bus, UV Express or train to take, how much it costs and how long it takes - for Caloocan, Malabon, Navotas and Valenzuela.">
+    <link rel="icon" href="Others/IMAGES/Logo_sample.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Others/vendor/maplibre-gl/maplibre-gl.css">
+    <link rel="stylesheet" href="Others/CSS/planner.css">
+</head>
+<body>
+<div class="app">
+
+    <!-- ============================== left panel: planner + results ============================== -->
+    <aside class="panel" id="panel">
+        <button type="button" class="sheet-handle" id="sheetHandle" aria-label="Expand or collapse the trip panel"></button>
+
+        <header class="brand">
+            <a class="brand-link" href="dashboard.html">
+                <img src="Others/IMAGES/Logo_sample.png" alt="">
+                <span>PUBTA</span>
+            </a>
+            <div class="brand-actions">
+                <button type="button" class="chip-btn" id="btnTutorial">How it works</button>
+            </div>
+        </header>
+
+        <form id="plannerForm" class="planner" autocomplete="off" novalidate>
+            <div class="route-fields">
+                <div class="rail" aria-hidden="true"><span class="dot dot-from"></span><span class="rail-line"></span><span class="dot dot-to"></span></div>
+
+                <div class="fields">
+                    <div class="field" data-kind="from">
+                        <label class="sr-only" for="fromInput">Starting point</label>
+                        <input id="fromInput" type="text" placeholder="Where are you now?" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fromList" autocomplete="off" spellcheck="false">
+                        <button type="button" class="icon-btn" data-act="locate" title="Use my location" aria-label="Use my current location">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7.5" fill="none"/></svg>
+                        </button>
+                        <button type="button" class="icon-btn" data-act="pick" title="Choose on the map" aria-label="Choose the starting point on the map">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 1 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                        </button>
+                        <ul id="fromList" class="suggest" role="listbox" aria-label="Suggested places for the starting point" hidden></ul>
+                    </div>
+
+                    <div class="field" data-kind="to">
+                        <label class="sr-only" for="toInput">Destination</label>
+                        <input id="toInput" type="text" placeholder="Where do you want to go?" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="toList" autocomplete="off" spellcheck="false">
+                        <button type="button" class="icon-btn" data-act="pick" title="Choose on the map" aria-label="Choose the destination on the map">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 1 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                        </button>
+                        <ul id="toList" class="suggest" role="listbox" aria-label="Suggested places for the destination" hidden></ul>
+                    </div>
+                </div>
+
+                <button type="button" id="btnSwap" class="swap" title="Swap start and destination" aria-label="Swap start and destination">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v14M8 18l-3-3M8 18l3-3M16 20V6M16 6l-3 3M16 6l3 3"/></svg>
+                </button>
+            </div>
+
+            <details class="options" id="options">
+                <summary><span>Options</span><span class="options-summary" id="optionsSummary"></span></summary>
+                <div class="options-body">
+                    <div class="opt-row">
+                        <label class="opt" for="passenger"><span>Passenger</span>
+                            <select id="passenger">
+                                <option value="regular">Regular</option>
+                                <option value="student">Student (20% off)</option>
+                                <option value="senior">Senior citizen (20% off)</option>
+                                <option value="pwd">PWD (20% off)</option>
+                            </select>
+                        </label>
+                        <label class="opt" for="whenMode"><span>Leave</span>
+                            <select id="whenMode">
+                                <option value="now">Now</option>
+                                <option value="custom">At a set time…</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label class="opt" for="whenInput" id="whenRow" hidden><span>Departure time</span>
+                        <input type="datetime-local" id="whenInput">
+                    </label>
+
+                    <div class="opt">
+                        <span>Transport I'm OK with</span>
+                        <div class="chips" id="modeChips" role="group" aria-label="Transport types"></div>
+                    </div>
+
+                    <label class="opt" for="walk"><span>Longest walk to a stop <output id="walkOut">900 m</output></span>
+                        <input type="range" id="walk" min="300" max="1500" step="100" value="900">
+                    </label>
+
+                    <label class="switch"><input type="checkbox" id="legacy" checked>
+                        <span>Include older jeepney routes <small>(LTFRB data from 2013–15 — confirm the signboard)</small></span>
+                    </label>
+                </div>
+            </details>
+
+            <button class="primary" type="submit" id="btnGo">Find routes</button>
+        </form>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <div id="srStatus" class="sr-only" role="status" aria-live="polite"></div>
+        <section id="results" class="results" aria-label="Route options"></section>
+
+        <section id="welcome" class="welcome">
+            <h2>Popular places</h2>
+            <div class="quick" id="quickPicks"></div>
+            <p class="coverage">Covers <strong>Caloocan, Malabon, Navotas and Valenzuela</strong> and the roads that connect them to Quezon City and Manila: jeepneys, buses, the EDSA Carousel, UV Express, LRT/MRT and tricycles.</p>
+        </section>
+
+        <footer class="foot">
+            <p id="footNote"></p>
+            <p>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · Legacy jeepney data: DOTC/LTFRB via <a href="https://github.com/sakayph/gtfs" target="_blank" rel="noopener">Sakay.ph</a> · Map by <a href="https://maplibre.org" target="_blank" rel="noopener">MapLibre</a> &amp; <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a></p>
+        </footer>
+    </aside>
+
+    <!-- ============================== map ============================== -->
+    <main class="map-wrap">
+        <div id="map" role="application" aria-label="Map of the route"></div>
+
+        <div class="map-ui">
+            <div class="layers">
+                <button type="button" class="chip-btn solid" id="btnLayers" aria-expanded="false" aria-controls="layersMenu">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>
+                    Routes on map
+                </button>
+                <div class="layers-menu" id="layersMenu" hidden>
+                    <p class="layers-title">Show on the map</p>
+                    <label><input type="checkbox" data-layer="train"><span class="swatch" style="background:linear-gradient(90deg,#6BA539,#7B3F98,#0D5CAB)"></span>Trains (LRT/MRT)</label>
+                    <label><input type="checkbox" data-layer="bus"><span class="swatch" style="--c:#2E7D32"></span>Buses (and the EDSA Carousel)</label>
+                    <label><input type="checkbox" data-layer="uv"><span class="swatch" style="--c:#8E24AA"></span>UV Express</label>
+                    <label><input type="checkbox" data-layer="jeepney"><span class="swatch" style="--c:#F57E3A"></span>Jeepneys (OpenStreetMap)</label>
+                    <label><input type="checkbox" data-layer="legacy"><span class="swatch" style="--c:#F57E3A;opacity:.45"></span>Older jeepney routes</label>
+                    <p class="layers-hint">Click any line to see its name.</p>
+                </div>
+            </div>
+            <div class="pick-banner" id="pickBanner" hidden>
+                <span id="pickText">Click the map to choose a point</span>
+                <button type="button" id="pickCancel">Cancel</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ============================== tutorial ============================== -->
+<dialog id="tutorial" class="tutorial" aria-labelledby="tutorialTitle">
+    <form method="dialog">
+        <button class="tutorial-close" aria-label="Close">&times;</button>
+        <h2 id="tutorialTitle">How PUBTA works</h2>
+        <ol>
+            <li><strong>Tell us where you're going.</strong> Type a landmark, school, mall, station, barangay or road (for example “UE”, “Monumento” or “Victory Mall”), use your current location, or pick a point on the map.</li>
+            <li><strong>Choose your options.</strong> Passenger type (students, seniors and PWD get discounts), when you leave, and which transport you're comfortable with.</li>
+            <li><strong>Press “Find routes”.</strong> You get the best options with total time and fare. Tap one to see every step: where to wait, which signboard to look for, where to get off and what each ride costs.</li>
+        </ol>
+        <p class="tutorial-note">Fares are the latest LTFRB/LRMC figures PUBTA knows about (updated Sept 2026); tricycle fares vary by city and are often negotiated. Times are estimates and consider rush hour.</p>
+        <button class="primary" value="close">Got it</button>
+    </form>
+</dialog>
+
+<script src="Others/vendor/maplibre-gl/maplibre-gl.js"></script>
+<script src="Others/JAVASCRIPT/planner/util.js"></script>
+<script src="Others/JAVASCRIPT/planner/api.js"></script>
+<script src="Others/JAVASCRIPT/planner/search.js"></script>
+<script src="Others/JAVASCRIPT/planner/map.js"></script>
+<script src="Others/JAVASCRIPT/planner/results.js"></script>
+<script src="Others/JAVASCRIPT/planner/app.js"></script>
+</body>
+</html>

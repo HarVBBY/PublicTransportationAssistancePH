@@ -1,0 +1,522 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Oswald:wght@200..700&family=Russo+One&family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Shadows+Into+Light&display=swap');
+
+body { margin: 0; padding: 0; font-family: Arial, sans-serif;  }
+#map {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+
+
+
+.navbar-website-title {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    top: 0px;
+    height: 90px;
+    width: 750px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 50px;
+    z-index: 15;
+}
+
+.titleandlogo {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+.navbar-website-logo {
+    background-color: transparent;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.navbar-website-name {
+    position: relative;
+    font-size: 1.3em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    color: rgb(63, 60, 60);
+    text-decoration: none;
+    background: transparent;
+}
+
+.tutorial-button {
+    position: relative;
+    display: flex;
+    top: 29%;
+    left: -140px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+}
+
+.tutorial-button button {
+    background: rgb(245, 126, 58);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-family: "Poppins";
+    font-weight: 700;
+    color: white;
+}
+
+.textbxholder {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100px;
+    width: 400px;
+    left: 50.3%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    background: white;
+    border-radius: 20px;
+    z-index: 11;
+}
+
+.directionslogo {
+    position: absolute;
+    height: 70px;
+    top: 130px;
+    left: 20px;
+    object-fit: cover;
+}
+
+.txtboxes_only_holder {
+    position: relative;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    top: 120px;
+    left: 90px;
+    gap: 10px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.inverse_location {
+    position: absolute;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background: rgb(245, 126, 58);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    left: 0%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 99;
+}
+
+.txtboxes {
+    display: inline-block;
+    position: relative;
+    
+}
+
+.txtboxes .comsearch {
+    display: none;
+    font-family: "Poppins", sans-serif;
+    position: absolute;
+    background-color: rgb(250, 250, 250);
+    z-index: 99;
+    border-radius: 11px;
+}
+
+.txtboxes:hover .comsearch {
+    display: block;
+}
+
+.txtboxes .comsearch a {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    padding: 10px 15px;
+    color: rgb(42, 42, 42);
+    border-radius: 25px;
+}
+
+.txtboxes a:hover {
+    background-color: rgb(226, 226, 226);
+}
+
+.txtboxes input {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.185);
+    background: transparent;
+    border-radius: 50px;
+    outline: none;
+    color: grey;
+    font-size: 1em;
+    font-family: 'Nunito', sans-serif;
+    transition: 0.2s;
+}
+
+.txtboxes span {
+    position: absolute;
+    left: 0%;
+    padding:10px 15px;
+    pointer-events: none;
+    font-size: 1em;
+    color: grey;
+    text-transform: uppercase;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: 0.2s;
+    z-index: 12;
+}
+
+.txtboxes input:valid ~ span,
+.txtboxes input:focus ~ span {
+    color: rgb(233, 233, 233);
+    top: -12%;
+    transform: translate(10px) translate(-7px);
+    font-size: 0.65em;
+    padding: 0 10px;
+    background: rgb(245, 126, 58);
+    border-left: 1px solid rgb(185, 94, 42);
+    border-right: 1px solid rgb(185, 94, 42);
+    letter-spacing: 0.2em;
+    border-radius: 4px;
+}
+
+.txtboxes input:valid,
+.txtboxes input:focus {
+    border: 1px solid rgb(245, 126, 58);
+}
+
+.txtboxes button {
+    position: absolute;
+    top: 10px;
+    left: 240px;
+    height: 25px;
+    width: 25px;
+    border: none;
+    border-radius: 20px;
+    background: none;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.exit-routing {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    top: 240px;
+    left: 260px;
+    background: rgb(245, 126, 58);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.exit-routing button{
+    cursor: pointer;
+    font-size: 1.4em;
+    background: white;
+    font-family: "Poppins";
+    background: none;
+    color: white;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+.exit-routing::after {
+    content: '';
+    background: rgb(255, 255, 255);
+    position: absolute;
+    height: 3px;
+    width: 0;
+    bottom: 4px;
+    left: 2;
+    border-radius: 5px;
+    transition: width 100ms ease-in-out;
+}
+
+.exit-routing:hover::after {
+    width: 70%;
+}
+
+.gobutt {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    background: rgb(245, 126, 58);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.gobutt button {
+    cursor: pointer;
+    font-size: 1.4em;
+    background: white;
+    font-family: "Poppins";
+    background: none;
+    color: white;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+.gobutt::after {
+    content: '';
+    background: rgb(255, 255, 255);
+    position: absolute;
+    height: 3px;
+    width: 0;
+    bottom: 4px;
+    left: 2;
+    border-radius: 5px;
+    transition: width 100ms ease-in-out;
+}
+
+.gobutt:hover::after {
+    width: 70%;
+}
+
+
+.txtboxes .clear-butt {
+    position: absolute;
+    background: rgb(255, 255, 255);
+    top:20%;
+    left: 90%;
+}
+
+
+
+/* the popup after pressing go*/
+#popup-box {
+    position: absolute;
+    top: 45px; /* Keeps the top position fixed */
+    left: 50%;
+    transform: translateX(-50%); /* Only horizontally centering */
+    background: #fff;
+    border-radius: 0px 0px 20px 20px;
+    padding: 1.5rem;
+    width: fit-content;
+    max-width: 90vw;
+    z-index: 1001;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-width: 400px;
+    max-height: 80vh; /* Limit the height */
+    overflow-y: auto; /* Allow scrolling if content is too large */
+}
+
+#close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+#popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+
+.popup-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.popup-left, .popup-right {
+    font-weight: bold;
+}
+
+.popup-right {
+    text-decoration: underline;
+}
+
+.inner-box {
+    position: relative;
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-weight: bold;
+    min-width: 300px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.inner-box:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.02);
+}
+
+/*go button of routelist selection*/
+.go-button {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: none;
+    background-color: rgb(245, 126, 58);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    justify-content: flex-start;
+}
+
+#popup-values {
+position: relative;
+display: flex; 
+justify-content: space-between;
+width: 100%;
+
+}
+
+#popup-values-info {
+    text-align: left;
+    max-width: 200px;
+}
+
+#popup-values-km-min {
+    text-align: left;
+    margin-right: 30px;
+    font-weight: 200;
+    font-size: 0.9em;
+}
+
+#popup-values-right {
+    text-align: middle;
+    color: rgb(245, 126, 58);
+    font-weight: 900;
+}
+#popup-values-right span{
+    text-decoration: underline;
+    color: black;
+    font-weight: 100;
+}
+
+
+.mapboxgl-popup.segment-popup {
+    position: absolute;
+    max-width: 180px;
+    font-size: 13px;
+    padding: 5px;
+    z-index: 10;
+}
+
+.mapboxgl-popup-content {
+    background-color: white;
+    border-radius: 6px;
+    padding: 6px 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/*popup icons*/
+.popup-icons {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+}
+
+.popup-icons img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/*Instruction Card Thingy*/
+#instruction-box {
+  background: #fff;         
+  color: #000;             
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / .15);
+  padding: 10px;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  font-size:0.9rem;   
+  display: flex;
+  flex-direction: column;
+  max-width: 100%; 
+  box-sizing: border-box;
+}
+
+#instruction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+#instruction-box-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.instruction-btn {
+  appearance: none;
+  border: none;
+  background: #ff7a00;   
+  color: #fff;          
+  font-size: 1rem;
+  line-height: 1;
+  padding: .35rem .6rem;
+  border-radius: .35rem;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.instruction-btn:hover { 
+    opacity: .85; 
+}
+
+#show-instruction {
+  margin: .5rem auto 0;
+  display: none;  
+}
+
+#instruction-values-info {
+    white-space: pre-line;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

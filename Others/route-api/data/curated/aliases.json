@@ -1,0 +1,15 @@
+{
+  "_comment": "Extra names commuters actually type. 'match' is matched (case/accent-insensitive) against the OpenStreetMap place name; 'city' optionally restricts the match to one city. Add lines freely and re-run: node scripts/build-places.js",
+  "aliases": [
+    { "match": "University of the East", "city": "Caloocan", "aliases": ["UE", "UE Caloocan", "U.E. Caloocan"] },
+    { "match": "Manila Central University", "aliases": ["MCU"] },
+    { "match": "SM City Grand Central", "aliases": ["SM Grand Central", "Grand Central", "SMGC"] },
+    { "match": "Fernando Poe Jr.", "aliases": ["Roosevelt", "Roosevelt Station", "FPJ", "Munoz"] },
+    { "match": "Monumento", "type": "station", "aliases": ["LRT Monumento", "Bonifacio Monument", "Monumento Circle"] },
+    { "match": "Caloocan City Hall", "aliases": ["Caloocan Hall"] },
+    { "match": "Valenzuela City Hall", "aliases": ["Valenzuela Hall"] },
+    { "match": "Malabon City Hall", "aliases": ["Malabon Hall"] },
+    { "match": "Navotas City Hall", "aliases": ["Navotas Hall"] },
+    { "match": "Divisoria", "aliases": ["Divisoria Market", "168 Mall"] }
+  ]
+}

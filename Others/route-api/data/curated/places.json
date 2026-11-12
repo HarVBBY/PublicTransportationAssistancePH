@@ -1,0 +1,6 @@
+{
+  "_comment": "Places that are missing from (or badly tagged in) OpenStreetMap. Coordinates come from the PUBTA team's own surveyed routes (the original routes table). Format: n=name, t=type, lat/lng, c=city, a=aliases. Re-run: node scripts/build-places.js",
+  "places": [
+    { "n": "Victory Mall", "t": "mall", "lat": 14.65569, "lng": 120.9837, "c": "Caloocan", "a": ["Victory Central Mall", "Victory Central", "Victory Mall Monumento"] }
+  ]
+}

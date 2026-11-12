@@ -1,0 +1,26 @@
+{
+  "name": "route-api",
+  "version": "1.0.0",
+  "description": "PUBTA - public transportation assistant for Caloocan, Malabon, Navotas and Valenzuela: trip-planning API and website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test",
+    "data:fetch": "node scripts/fetch-osm.js && node scripts/fetch-roads.js && node scripts/fetch-gtfs.js",
+    "data:roads": "node scripts/fetch-roads.js && node scripts/build-roads.js",
+    "data:build": "node scripts/build-areas.js && node scripts/build-roads.js && node scripts/build-network.js && node scripts/build-places.js",
+    "plan": "node scripts/try-plan.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

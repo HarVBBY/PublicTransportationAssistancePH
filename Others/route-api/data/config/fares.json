@@ -1,0 +1,71 @@
+{
+  "_comment": "Fare tables used by the planner. Every class carries a confidence: 'official' (published LTFRB/LRMC figure), 'reported' (from news coverage of the official order - verify), or 'estimate' (PUBTA's assumption; fares vary). Change a number here and the planner uses it immediately - no code changes needed.",
+  "asOf": "2026-09-28",
+  "currency": "PHP",
+  "classes": {
+    "puj_traditional": {
+      "label": "Traditional jeepney", "type": "distance",
+      "base": 14, "baseKm": 4, "perKm": 2.0, "round": 1,
+      "confidence": "reported",
+      "source": "LTFRB fare adjustment, effective 2026-09-28 (PHP 14 first 4 km, +PHP 2.00/km). https://philstarlife.com/news-and-views/486689-dotr-approves-puv-fare-hikes-effective-sept-28"
+    },
+    "puj_modern": {
+      "label": "Modern jeepney", "type": "distance",
+      "base": 17, "baseKm": 4, "perKm": 2.4, "round": 1,
+      "confidence": "reported",
+      "source": "LTFRB fare adjustment, effective 2026-09-28 (PHP 17 first 4 km, +PHP 2.40/km). https://mb.com.ph/2026/03/17/ltfrb-approves-balanced-fare-hikes-for-jeepneys-other-puvs"
+    },
+    "bus_ordinary": {
+      "label": "City bus (ordinary)", "type": "distance",
+      "base": 15, "baseKm": 5, "perKm": 2.49, "round": 1,
+      "confidence": "reported",
+      "source": "LTFRB 2026 adjustment for Metro Manila ordinary buses (PHP 15 first 5 km, +PHP 2.49/km as reported)."
+    },
+    "bus_aircon": {
+      "label": "City bus (air-conditioned)", "type": "distance",
+      "base": 18, "baseKm": 5, "perKm": 2.98, "round": 1,
+      "confidence": "reported",
+      "source": "LTFRB 2026 adjustment for Metro Manila aircon buses (PHP 18 first 5 km, +PHP 2.98/km as reported)."
+    },
+    "uv_express": {
+      "label": "UV Express", "type": "distance",
+      "base": 25, "baseKm": 4, "perKm": 2.5, "round": 1,
+      "confidence": "estimate",
+      "source": "PUBTA estimate - UV Express fares vary by route; check the posted fare matrix at the terminal."
+    },
+    "free": {
+      "label": "Free ride", "type": "flat", "amount": 0, "confidence": "reported",
+      "source": "QCityBus is a free city bus service."
+    },
+    "lrt1": {
+      "label": "LRT-1", "type": "stations", "min": 20, "max": 55, "round": 1,
+      "confidence": "reported",
+      "source": "LRMC single-journey fare matrix, effective 2025-04-02: PHP 20 minimum, PHP 55 maximum end-to-end. Per-station values are interpolated here - check lrmc.ph for the exact matrix."
+    },
+    "mrt3": {
+      "label": "MRT-3", "type": "stations", "min": 13, "max": 28, "round": 1,
+      "confidence": "estimate", "source": "PUBTA estimate from the published MRT-3 range."
+    },
+    "lrt2": {
+      "label": "LRT-2", "type": "stations", "min": 15, "max": 35, "round": 1,
+      "confidence": "estimate", "source": "PUBTA estimate from the published LRT-2 range."
+    },
+    "tricycle": {
+      "label": "Tricycle", "type": "distance", "round": 1,
+      "byCity": {
+        "Valenzuela": { "base": 10, "baseKm": 1, "perKm": 1.5, "confidence": "reported", "source": "Valenzuela City TODA fare, reduced to PHP 10 + PHP 1.50/km (2023 report). May have changed - ask the driver." },
+        "Malabon":    { "base": 15, "baseKm": 1, "perKm": 2.0, "confidence": "reported", "source": "Malabon fare matrix (2020 report): PHP 15 within 1 km, +PHP 2 per km." },
+        "Caloocan":   { "base": 15, "baseKm": 1, "perKm": 2.5, "confidence": "estimate", "source": "PUBTA estimate - no current published Caloocan matrix found." },
+        "Navotas":    { "base": 15, "baseKm": 1, "perKm": 2.5, "confidence": "estimate", "source": "PUBTA estimate - no current published Navotas matrix found." }
+      },
+      "default": { "base": 15, "baseKm": 1, "perKm": 2.5, "confidence": "estimate", "source": "PUBTA estimate for tricycle fares." },
+      "note": "Tricycle fares are set per city and per TODA, and are often negotiated. 'Special trips' (the whole tricycle for yourself) cost several times more."
+    }
+  },
+  "discounts": {
+    "_comment": "Share of the fare that is waived for the passenger type. Students (RA 11314), senior citizens (RA 9994) and persons with disability (RA 7277) get 20% on road transport. The 50% train concession is as reported for LRT-1 (white Beep card) - verify at the station.",
+    "default": 0.2,
+    "byClass": { "lrt1": 0.5, "mrt3": 0.5, "lrt2": 0.5, "tricycle": 0, "free": 0 },
+    "passengerTypes": ["regular", "student", "senior", "pwd"]
+  }
+}

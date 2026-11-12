@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# secrets / local configuration
+.env
+.env.*
+!.env.example
+
+# raw downloads used to (re)build the transit data - regenerate with `npm run data:fetch`
+Others/route-api/data/raw/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
