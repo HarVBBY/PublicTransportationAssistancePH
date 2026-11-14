@@ -10,20 +10,31 @@
   const api = {
     base: '',
 
+    /** After a failed init(): 'wrong-server' (something answered, but it is not PUBTA) or 'unreachable' (nothing answered). */
+    problem: null,
+
     /**
      * The page is normally served by the PUBTA server itself (same origin). If it was opened from another
-     * static server (e.g. VS Code Live Server on :5501) fall back to the API on localhost:8000.
+     * static server (e.g. VS Code Live Server on :5501) fall back to the API on port 8000 - tried as 127.0.0.1
+     * as well as localhost, because "localhost" can resolve to IPv6 where a different program may be listening.
      * You can also force a server with  ?api=http://host:port
      */
     async init() {
       const override = new URLSearchParams(location.search).get('api');
-      const candidates = override ? [override.replace(/\/$/, '')] : ['', 'http://localhost:8000'];
+      const candidates = override
+        ? [override.replace(/\/$/, '')]
+        : ['', 'http://127.0.0.1:8000', 'http://localhost:8000'].filter((b) => !b || b !== location.origin); // (an origin equal to this page's is the '' candidate already)
+      let sawOtherServer = false;
       for (const base of candidates) {
         try {
           const res = await fetch(`${base}/api/health`, { signal: AbortSignal.timeout(2500) });
-          if (res.ok) { api.base = base; return true; }
-        } catch (e) { /* try the next one */ }
+          let data = null;
+          try { data = await res.json(); } catch (e) { /* not JSON */ }
+          if (res.ok && data && data.ok === true) { api.base = base; api.problem = null; return true; }
+          sawOtherServer = true; // something answered, but it is not the PUBTA API
+        } catch (e) { /* nothing there - try the next one */ }
       }
+      api.problem = sawOtherServer ? 'wrong-server' : 'unreachable';
       return false;
     },
 

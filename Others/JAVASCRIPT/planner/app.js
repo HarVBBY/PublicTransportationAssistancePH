@@ -243,7 +243,12 @@
     document.querySelectorAll('[data-layer]').forEach((cb) => cb.addEventListener('change', () => mapCtl.setOverlay(cb.dataset.layer, cb.checked)));
     $('pickCancel').addEventListener('click', () => { mapCtl.stopPick(); document.querySelectorAll('.icon-btn.active').forEach((b) => b.classList.remove('active')); });
 
-    if (!(await api.init())) { fatal("Can't reach the PUBTA server. Start it with “npm start” in Others/route-api, then reload this page."); return; }
+    if (!(await api.init())) {
+      fatal(api.problem === 'wrong-server'
+        ? 'This page is being served by a plain file server (for example Python’s http.server or Live Server), not by PUBTA, so it has no route data. Close that server, run “npm start” in Others/route-api, then open http://127.0.0.1:8000/PUBTASYSTEM.html.'
+        : "Can't reach the PUBTA server. Start it with “npm start” in Others/route-api, then reload this page.");
+      return;
+    }
     state.cfg = await api.config();
     results.cfg = state.cfg;
     state.prefs = { ...state.prefs, ...store.get('pubta.prefs', {}) };
